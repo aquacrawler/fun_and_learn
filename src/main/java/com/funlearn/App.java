@@ -4,7 +4,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
@@ -20,16 +19,16 @@ public class App extends WebMvcConfigurerAdapter {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry
-            .addResourceHandler("/*.html")
+            .addResourceHandler("/**/*")
             .addResourceLocations("classpath:web/"); 
         
-        registry
-            .addResourceHandler("/css/**/*.css")
-            .addResourceLocations("classpath:web/css/");
-        
-        registry
-            .addResourceHandler("/js/**/*.js")
-            .addResourceLocations("classpath:web/js/");
+//        registry
+//            .addResourceHandler("/**/*.css")
+//            .addResourceLocations("classpath:web/");
+//        
+//        registry
+//            .addResourceHandler("/**/*.js")
+//            .addResourceLocations("classpath:web/");
                 
     }
     
