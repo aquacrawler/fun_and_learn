@@ -53,6 +53,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <!-- will be replaced with elements/elements.vulcanized.html -->
   <link rel="import" href="elements/elements.html">
   <!-- endreplace-->
+  
+   <link rel="import" href="bower_components/iron-icons/social-icons.html">
+  
+  <style>
+      .content {
+        padding-left: 15px;
+      }
+    </style>
 </head>
 
 <body unresolved class="fullbleed layout vertical">
@@ -80,11 +88,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <span>Users</span>
           </a>
 
-          <a data-route="contact" href="/contact">
-            <iron-icon icon="mail"></iron-icon>
-            <span>Contact</span>
-          </a>
-        </paper-menu>
+          <a onclick="document.querySelector('#collapse1').toggle(); return false;" href="/">
+          <iron-icon icon="social:people"></iron-icon>
+            <span>Students</span>
+          </a>  
+            <iron-collapse id="collapse1">
+                <paper-menu class="list">
+                     <a data-route="accounts" href="/students/add">
+                       <iron-icon icon="social:person-add"></iron-icon>
+                       <span>Add New</span>
+                     </a>
+                     <a data-route="accounts" href="/students">
+                       <iron-icon icon="list"></iron-icon>
+                       <span>List</span>
+                     </a>
+                     <a data-route="accounts" href="/students/accounts">
+                       <iron-icon icon="account-box"></iron-icon>
+                       <span>Accounts</span>
+                     </a>
+
+                </paper-menu>
+            </iron-collapse>
+        </paper-menu>  
       </paper-scroll-header-panel>
 
       <!-- Main Area -->
@@ -106,7 +131,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           <!-- Application sub title -->
           <div class="bottom bottom-container center horizontal layout">
-            <div class="bottom-title paper-font-subhead">We love care and teach</div>
+            <div class="bottom-title paper-font-subhead">We love. We care. We teach</div>
           </div>
 
         </paper-toolbar>
@@ -124,9 +149,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
                 <p class="paper-font-body2">Looking for more Web App layouts? Check out our <a href="https://github.com/PolymerElements/app-layout-templates">layouts</a> collection. You can also <a href="http://polymerelements.github.io/app-layout-templates/">preview</a> them live.</p>
               </paper-material>
+                
               <paper-material elevation="1">
                 <p class="paper-font-body2">This is another card.</p>
               </paper-material>
+              
+              <paper-material>  
+                <paper-card heading="Card Title">
+                  <div class="card-content">Some content</div>
+                  <div class="card-actions">
+                    <paper-button>Some action</paper-button>
+                  </div>
+                </paper-card>
+               </paper-material>      
             </section>
 
             <section data-route="users">
@@ -145,15 +180,33 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <div>This is <span>{{params.name}}</span>'s section</div>
               </paper-material>
             </section>
-
-            <section data-route="contact">
+              
+            <section data-route="students-add">
               <paper-material elevation="1">
-                <h2 class="paper-font-display2">Contact</h2>
-                <p>This is the contact section</p>
+                <h2 class="paper-font-display2">Add Student</h2>
               </paper-material>
             </section>
+              
+            <section data-route="students-list">
+              <paper-material elevation="1">
+                <h2 class="paper-font-display2">Students</h2>
+              </paper-material>
+            </section>
+              
+            <section data-route="students-accounts">
+              <paper-material elevation="1">
+                <h2 class="paper-font-display2">Accounts</h2>
+              </paper-material>
+            </section>  
+            
+            <section data-route="students-account-details">
+              <paper-material elevation="1">
+                <h2 class="paper-font-display2">Account No:</h2>
+              </paper-material>
+            </section>  
+              
 
-          </iron-pages>
+           </iron-pages>
         </div>
       </paper-scroll-header-panel>
     </paper-drawer-panel>
