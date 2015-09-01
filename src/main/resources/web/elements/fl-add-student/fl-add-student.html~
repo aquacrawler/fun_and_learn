@@ -1,0 +1,53 @@
+	<dom-module id="fl-add-student">
+  <style>
+	.header {
+		font-size: 45px;
+		font-weight: 400;
+  		letter-spacing: -.018em;
+  		line-height: 48px;
+		display: block;
+	}
+
+  </style>	
+  <template>
+    <div class="header">Add Student</div>
+    <iron-form>
+        <paper-input name="lastname" label="Last Name"></paper-input>
+        <paper-input name="firstname" label="First Name"></paper-input>
+        <paper-input name="middlename" label="Middle Name"></paper-input>
+	<paper-input name="dateofbirth" onfocus="_showDateOfBirthDlg();" label="Date of Birth"></paper-input>
+	
+        <paper-input name="address" label="Address"></paper-input>
+	<paper-input name="fathersname" label="Father's Name"></paper-input>
+    </iron-form>
+
+      <paper-dialog id="datedialog" class="paper-date-picker-dialog" on-iron-overlay-closed="_dismissDialog" modal>
+        <paper-date-picker id="picker" responsive-width="655px"></paper-date-picker>
+        <div class="buttons">
+          <paper-button dialog-dismiss>Cancel</paper-button>
+          <paper-button dialog-confirm>OK</paper-button>
+        </div>
+      </paper-dialog>
+
+
+			
+  </template>
+
+  <script> 
+      Polymer({
+        is: 'fl-add-student'
+
+        
+	   
+      });
+
+      function	_showDateOfBirthDlg() {
+					document.getElementById('datedialog').open();				
+				}
+      function _dismissdialog() {
+				alert('Dialog dismissed');
+			}
+      	                
+  </script>
+
+</dom-module>
