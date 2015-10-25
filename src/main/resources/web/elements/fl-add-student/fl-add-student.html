@@ -7,22 +7,35 @@
   		line-height: 48px;
 		display: block;
 	}
+        
+        :host {
+            display: block;
+        }
+        
+        paper-button.fancy {
+            background: #3F51B5;
+            color: yellow;
+          }
+
 
   </style>	
-  <template>
-    <div class="header">Add Student</div>
-    <iron-form>
-        <paper-input name="lastname" label="Last Name"></paper-input>
-        <paper-input name="firstname" label="First Name"></paper-input>
-        <paper-input name="middlename" label="Middle Name"></paper-input>
-	<paper-input name="dateofbirth" onfocus="_showDateOfBirthDlg();" label="Date of Birth"></paper-input>
+  <template id="componentForm">
+    <div id="header" class="header">Add Student</div>
+    <iron-form id="form1">
+        <paper-input id="lastname" label="Last Name"></paper-input>
+        <paper-input id="firstname" label="First Name"></paper-input>
+        <paper-input id="middlename" label="Middle Name"></paper-input>
+	<paper-input id="dateOfBirth" on-focus="showDateDialog" label="Date of Birth"></paper-input>
 	
-        <paper-input name="address" label="Address"></paper-input>
-	<paper-input name="fathersname" label="Father's Name"></paper-input>
+        <paper-input id="address" label="Address"></paper-input>
+	<paper-input id="fathersname" label="Father's Name"></paper-input>
+        <paper-input id="fathersContactNum" label="Father's Contact Number"></paper-input>
+        <paper-input id="mothersname" label="Mother's Name"></paper-input>
+        <paper-input id="mothersContactNum" label="Mother's Contact Number"></paper-input>
+        <paper-button raised elevation="2" class="fancy">Save</paper-button>
     </iron-form>
-
-      <paper-dialog id="datedialog" class="paper-date-picker-dialog" on-iron-overlay-closed="_dismissDialog" modal>
-        <paper-date-picker id="picker" responsive-width="655px"></paper-date-picker>
+      <paper-dialog id="datedialog" class="paper-date-picker-dialog" on-iron-overlay-closed="dismissDialog" modal>
+        <paper-date-picker id="picker"></paper-date-picker>
         <div class="buttons">
           <paper-button dialog-dismiss>Cancel</paper-button>
           <paper-button dialog-confirm>OK</paper-button>
@@ -30,24 +43,27 @@
       </paper-dialog>
 
 
-			
   </template>
 
-  <script> 
+  <script>
+    
       Polymer({
-        is: 'fl-add-student'
+        is: "fl-add-student",
 
+        ready : function () {
+        },
         
-	   
+        showDateDialog : function _showDateOfBirthDlg() {
+                            console.log('date dialog opened');
+                            this.$.datedialog.open();				
+			},
+                        
+        dismissDialog : function _dismissDialog(event) {
+                            console.log('date dialog dismissed');
+                            funcDateFormat = this.$.picker.dateFormat;
+                            this.$.dateOfBirth.value = funcDateFormat(this.$.picker.date, "YYYY-MM-DD");
+			} 
       });
-
-      function	_showDateOfBirthDlg() {
-					document.getElementById('datedialog').open();				
-				}
-      function _dismissdialog() {
-				alert('Dialog dismissed');
-			}
-      	                
   </script>
 
 </dom-module>
