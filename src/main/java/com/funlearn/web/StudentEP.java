@@ -47,4 +47,10 @@ public class StudentEP {
         return new ResponseEntity<>(HttpStatus.OK);
     }
     
+    @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
+    public ResponseEntity<Void> deleteStudent(@PathVariable String id) {
+        studentRepo.remove(studentRepo.get(id));
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
+    
 }
