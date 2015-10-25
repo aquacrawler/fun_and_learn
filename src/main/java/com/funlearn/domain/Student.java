@@ -1,18 +1,24 @@
 package com.funlearn.domain;
 
+import java.util.Calendar;
 import java.util.Date;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.ektorp.support.CouchDbDocument;
+import org.ektorp.support.TypeDiscriminator;
 
 /**
  *
  * @author kerwin
  */
-public class Student {
-    @JsonProperty("_id")
-    private String id;
+@JsonIgnoreProperties(ignoreUnknown = true)
+@TypeDiscriminator("doc.type == 'Student'")
+public class Student extends CouchDbDocument {
     
-    @JsonProperty("_rev")
-    private String revision;
+    public static final String DOC_TYPE = "Student";
+    
+    @JsonProperty
+    private final String type;
     
     @JsonProperty
     private String lastname;
@@ -40,6 +46,11 @@ public class Student {
     
     @JsonProperty
     private String mothersContactNo;
+    
+    public Student() {
+        super();
+        this.type = DOC_TYPE;
+    }
 
     public String getLastname() {
         return lastname;
@@ -112,14 +123,4 @@ public class Student {
     public void setMothersContactNo(String mothersContactNo) {
         this.mothersContactNo = mothersContactNo;
     }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-    
-    
 }

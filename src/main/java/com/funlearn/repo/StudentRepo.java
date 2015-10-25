@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
  * @author kerwin
  */
 @Repository
-@View( name = "all", map = "function(doc) { if (doc.type == 'Student' ) emit( doc.lastname, null )}")
+@View( name = "all", map = "function(doc) { if (doc.type === 'Student' ) emit( doc.lastname, null )}")
 public class StudentRepo extends CouchDbRepositorySupport<Student> {
     private static final Logger LOG = Logger.getLogger(StudentRepo.class.getName());
     
