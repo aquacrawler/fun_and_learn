@@ -22,25 +22,37 @@
   <template id="componentForm">
     <div id="header" class="header">Add Student</div>
     <iron-form id="form1">
-        <paper-input id="lastname" label="Last Name"></paper-input>
-        <paper-input id="firstname" label="First Name"></paper-input>
-        <paper-input id="middlename" label="Middle Name"></paper-input>
-	<paper-input id="dateOfBirth" on-focus="showDateDialog" label="Date of Birth"></paper-input>
+        <paper-input id="lastname" label="Last Name" value="{{student.lastname}}"></paper-input>
+        <paper-input id="firstname" label="First Name" value="{{student.firstname}}"></paper-input>
+        <paper-input id="middlename" label="Middle Name" value="{{student.middlename}}"></paper-input>
+	<paper-input id="dateOfBirth" label="Date of Birth" value="{{student.birthdate}}"></paper-input>
 	
-        <paper-input id="address" label="Address"></paper-input>
-	<paper-input id="fathersname" label="Father's Name"></paper-input>
-        <paper-input id="fathersContactNum" label="Father's Contact Number"></paper-input>
-        <paper-input id="mothersname" label="Mother's Name"></paper-input>
-        <paper-input id="mothersContactNum" label="Mother's Contact Number"></paper-input>
-        <paper-button raised elevation="2" class="fancy">Save</paper-button>
+        <paper-input id="address" label="Address" value="{{student.address}}" ></paper-input>
+	<paper-input id="fathersname" label="Father's Name" value="{{student.fathersname}}"></paper-input>
+        <paper-input id="fathersContactNum" label="Father's Contact Number" value="{{student.fathersContactNo}}"></paper-input>
+        <paper-input id="mothersname" label="Mother's Name" value="{{student.mothersname}}"></paper-input>
+        <paper-input id="mothersContactNum" label="Mother's Contact Number" value="{{student.mothersContactNo}}"></paper-input>
+        <paper-button id="saveButton" raised elevation="2" class="fancy">Save</paper-button>
     </iron-form>
-      <paper-dialog id="datedialog" class="paper-date-picker-dialog" on-iron-overlay-closed="dismissDialog" modal>
-        <paper-date-picker id="picker"></paper-date-picker>
-        <div class="buttons">
-          <paper-button dialog-dismiss>Cancel</paper-button>
-          <paper-button dialog-confirm>OK</paper-button>
-        </div>
-      </paper-dialog>
+    <paper-dialog id="dateDialog" class="paper-date-picker-dialog" modal>
+      <paper-date-picker id="picker"></paper-date-picker>
+      <div class="buttons">
+        <paper-button dialog-dismiss>Cancel</paper-button>
+        <paper-button dialog-confirm>OK</paper-button>
+      </div>
+    </paper-dialog>
+    <iron-ajax
+            id="ajaxComp"
+            url="http://localhost/students"
+            method="post"
+            handle-as="json"
+            body="{{student}}"
+            verbose="true"
+            headers='{"Content-Type":"application/json"}'
+            
+        >
+    </iron-ajax>
+    
 
 
   </template>
@@ -53,16 +65,49 @@
         ready : function () {
         },
         
-        showDateDialog : function _showDateOfBirthDlg() {
+        properties : {
+            student : {
+                type : Object,
+                notify : true,
+                value : {}
+            }
+        },
+        
+        listeners : {
+            'saveButton.tap' : 'saveNewStudent',
+            'ajaxComp.error' : 'saveError',
+            'ajaxComp.response' : 'saveResponse',
+            'dateOfBirth.focus' : 'showDateDialog',
+            'dateDialog.iron-overlay-closed' : 'dismissDialog'
+        },
+        
+        showDateDialog : function() {
                             console.log('date dialog opened');
-                            this.$.datedialog.open();				
+                            this.$.dateDialog.open();				
 			},
                         
-        dismissDialog : function _dismissDialog(event) {
+        dismissDialog : function(event) {
                             console.log('date dialog dismissed');
                             funcDateFormat = this.$.picker.dateFormat;
                             this.$.dateOfBirth.value = funcDateFormat(this.$.picker.date, "YYYY-MM-DD");
-			} 
+			},
+                        
+        saveNewStudent : function() {
+                            alert('About to save student!');
+                            console.log('Saving new student');
+                            console.log(this.student);  
+                            this.$.ajaxComp.generateRequest();
+                        },
+                        
+        saveError : function(error) {
+            alert(error.detail.error.message);
+        },
+        
+        saveResponse : function(response) {
+            alert('Student saved');
+            this.student = {};
+            console.log(response)
+        }
       });
   </script>
 
