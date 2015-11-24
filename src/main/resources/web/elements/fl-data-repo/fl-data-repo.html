@@ -1,0 +1,56 @@
+<!--
+fl-data-repo - Object repositories component
+
+-->
+<link rel="import" href="/bower_components/iron-ajax/iron-ajax.html" >
+<script>
+    Polymer({
+        is : 'fl-data-repo',
+        
+        properties : {
+            /* the UI domain object type to be retrieved*/
+            objectType : {
+                type : String,
+                value : 'Student'
+            },
+            
+            /* request method: get or put - direction of data flow */
+            method : {
+                type : String,
+                value : 'get'
+            },
+            
+            /* the sorting by field. the first index takes precedence over the next one*/
+            orderBy : {
+                type : Array,
+                value : ['id']
+            },
+            
+            /* selection criteria used when retrieving Student objects*/
+            filterBy : {
+                type : Object,
+                value : {}
+            }
+        },
+        
+        get : function() {
+                var ajaxObject = document.createElement('iron-ajax');
+                ajaxObject.url = _urls[this.objectType];
+                
+                console.log('url:' + _urls[this.objectType] );
+            
+            },
+            
+        _urls : {
+                    Student : '/students'
+            
+                }
+            
+            
+        
+        
+        
+    }
+    );
+    
+</script>
