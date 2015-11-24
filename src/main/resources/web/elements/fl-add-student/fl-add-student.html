@@ -26,7 +26,6 @@
         <paper-input id="firstname" label="First Name" value="{{student.firstname}}"></paper-input>
         <paper-input id="middlename" label="Middle Name" value="{{student.middlename}}"></paper-input>
 	<paper-input id="dateOfBirth" label="Date of Birth" value="{{student.birthdate}}"></paper-input>
-	
         <paper-input id="address" label="Address" value="{{student.address}}" ></paper-input>
 	<paper-input id="fathersname" label="Father's Name" value="{{student.fathersname}}"></paper-input>
         <paper-input id="fathersContactNum" label="Father's Contact Number" value="{{student.fathersContactNo}}"></paper-input>
@@ -43,7 +42,7 @@
     </paper-dialog>
     <iron-ajax
             id="ajaxComp"
-            url="http://localhost/students"
+            url="/students"
             method="post"
             handle-as="json"
             body="{{student}}"
@@ -93,7 +92,6 @@
 			},
                         
         saveNewStudent : function() {
-                            alert('About to save student!');
                             console.log('Saving new student');
                             console.log(this.student);  
                             this.$.ajaxComp.generateRequest();
