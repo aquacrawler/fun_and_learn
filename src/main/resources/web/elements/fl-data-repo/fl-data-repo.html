@@ -2,10 +2,30 @@
 fl-data-repo - Object repositories component
 
 -->
+<dom-module id="fl-data-repo">
 <link rel="import" href="/bower_components/iron-ajax/iron-ajax.html" >
+<template>
+    <iron-ajax
+            id="ajaxObj"
+            handle-as="json"
+            verbose="true"
+            headers='{"Content-Type":"application/json","Accept":"application/json"}'
+            last-response="{{lastResponse}}"
+            
+        >
+    </iron-ajax>
+</template>
 <script>
     Polymer({
         is : 'fl-data-repo',
+        
+        ready : function () {
+            this.$.ajaxObj.url = this.urls[this.objectType];
+            console.log('data-repo url:' + this.urls[this.objectType] );
+        },
+        
+        listeners : {
+        },
         
         properties : {
             /* the UI domain object type to be retrieved*/
@@ -30,27 +50,25 @@ fl-data-repo - Object repositories component
             filterBy : {
                 type : Object,
                 value : {}
-            }
-        },
-        
-        get : function() {
-                var ajaxObject = document.createElement('iron-ajax');
-                ajaxObject.url = _urls[this.objectType];
-                
-                console.log('url:' + _urls[this.objectType] );
-            
             },
             
-        _urls : {
+            /* latest response from server */
+            lastResponse: {
+                type: Object,
+                notify: true,
+            },
+        },
+        
+        getData : function() {
+                console.log("get:" + this.$.ajaxObj);
+                this.$.ajaxObj.generateRequest();
+            },
+            
+        urls : {
                     Student : '/students'
-            
                 }
-            
-            
-        
-        
-        
-    }
+        }
     );
     
 </script>
+</dom-module>
