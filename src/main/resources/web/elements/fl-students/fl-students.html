@@ -13,6 +13,7 @@
                     <button type="button" on-click="changeSort">{{_getHeaderTitle(column)}}</button>
                   </th>
                 </template>
+                <th></th>
               </tr>
             </thead>
             <tbody>
@@ -21,6 +22,9 @@
                   <template is="dom-repeat" items="{{columns}}" as="column">
                     <td>{{_getTableData(row, column)}}</td>
                   </template>
+                    <td>
+                        <paper-icon-button icon="delete" on-tap="onDelete"></paper-icon-button>
+                    </td>
                 </tr>
               </template>
             </tbody>
@@ -35,7 +39,6 @@
            is : 'fl-students',
            
            ready : function() {
-//               this.getData();
            },
            
            properties : {
@@ -74,7 +77,7 @@
            },
            
            getData : function () {
-               this.$.dataRepo.getData();
+               this.$.dataRepo.generateRequest();
            },
            
            /**
@@ -136,6 +139,25 @@
              } else {
                this.sortColumn = clickedSortColumn;
              }
+           },
+
+           /**
+            * Delete student
+            * @param {type} event
+            * @returns {undefined}
+            */
+           onDelete: function(event) {
+               var student = event.model.row
+               if (window.confirm("Are you sure you want to delete the student " + student.firstname + " " + student.lastname + "?")) {
+                   console.log("Deleting student " + event.model.row.id);
+                   var dataRepo = this.$.dataRepo;
+                   dataRepo.method = "delete";
+                   dataRepo.filterBy = { id : event.model.row.id};
+                   dataRepo.generateRequest();
+                   alert("Student deleted");
+                   // reload
+                   dataRepo.generateRequest();
+               }
            }
        });
     </script>

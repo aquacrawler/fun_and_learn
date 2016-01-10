@@ -34,7 +34,7 @@ fl-data-repo - Object repositories component
                 value : 'Student'
             },
             
-            /* request method: get or put - direction of data flow */
+            /* request method: get / put / delete  */
             method : {
                 type : String,
                 value : 'get'
@@ -59,11 +59,33 @@ fl-data-repo - Object repositories component
             },
         },
         
-        getData : function() {
-                console.log("get:" + this.$.ajaxObj);
-                this.$.ajaxObj.generateRequest();
+        _resetParams : function() {
+            console.log("Params reset");
+            this.objectType = 'Student';
+            this.$.ajaxObj.url = this.urls[this.objectType];
+            this.method = 'get';
+            this.orderBy = ['id'];
+            this.filterBy = {};
+        },
+
+        generateRequest : function() {
+                var ajaxObj = this.$.ajaxObj;
+                ajaxObj.url = this.urls[this.objectType];
+
+                if (this.method) {
+                    ajaxObj.method = this.method;
+                }
+
+                if (this.filterBy['id']) {
+                    ajaxObj.url += "/" + this.filterBy['id'];
+                }
+
+                ajaxObj.generateRequest();
+
+                // after every request we need to first the properties to go back to defaults
+                this._resetParams();
             },
-            
+
         urls : {
                     Student : '/students'
                 }
