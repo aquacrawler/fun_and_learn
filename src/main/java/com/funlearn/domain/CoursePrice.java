@@ -16,14 +16,6 @@ import org.ektorp.support.TypeDiscriminator;
 public class CoursePrice extends CouchDbDocument{
     private static String DOC_TYPE = "CoursePrice";
 
-    public static String getDOC_TYPE() {
-        return DOC_TYPE;
-    }
-
-    public static void setDOC_TYPE(String aDOC_TYPE) {
-        DOC_TYPE = aDOC_TYPE;
-    }
-    
     @JsonProperty
     private String type;
     @JsonProperty
