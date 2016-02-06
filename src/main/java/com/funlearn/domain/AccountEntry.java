@@ -26,39 +26,44 @@ public class AccountEntry {
         return date;
     }
 
-    public void setDate(Date date) {
+    public AccountEntry setDate(Date date) {
         this.date = date;
+        return this;
     }
 
     public String getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public AccountEntry setType(String type) {
         this.type = type;
+        return this;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+    public AccountEntry setDescription(String description) {
         this.description = description;
+        return this;
     }
 
     public String getReferenceDoc() {
         return referenceDoc;
     }
 
-    public void setReferenceDoc(String referenceDoc) {
+    public AccountEntry setReferenceDoc(String referenceDoc) {
         this.referenceDoc = referenceDoc;
+        return this;
     }
 
     public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(BigDecimal amount) {
+    public AccountEntry setAmount(BigDecimal amount) {
         this.amount = amount;
+        return this;
     }
 }

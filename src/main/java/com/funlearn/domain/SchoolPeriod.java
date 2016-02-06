@@ -33,30 +33,34 @@ public class SchoolPeriod extends CouchDbDocument {
         return type;
     }
 
-    public void setType(String type) {
+    public SchoolPeriod setType(String type) {
         this.type = type;
+        return this;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public SchoolPeriod setName(String name) {
         this.name = name;
+        return this;
     }
 
     public boolean isCurrent() {
         return current;
     }
 
-    public void setCurrent(boolean current) {
+    public SchoolPeriod setCurrent(boolean current) {
         this.current = current;
+        return this;
     }
     public int getSeqNo() {
         return seqNo;
     }
 
-    public void setSeqNo(int seqNo) {
+    public SchoolPeriod setSeqNo(int seqNo) {
         this.seqNo = seqNo;
+        return this;
     }
 }

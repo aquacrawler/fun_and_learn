@@ -33,31 +33,35 @@ public class Enrollment extends CouchDbDocument {
         return schoolPeriodId;
     }
 
-    public void setSchoolPeriodId(String schoolPeriodId) {
+    public Enrollment setSchoolPeriodId(String schoolPeriodId) {
         this.schoolPeriodId = schoolPeriodId;
+        return this;
     }
 
     public StudentLevel getStudentLevel() {
         return studentLevel;
     }
 
-    public void setStudentLevel(StudentLevel studentLevel) {
+    public Enrollment setStudentLevel(StudentLevel studentLevel) {
         this.studentLevel = studentLevel;
+        return this;
     }
 
     public String getStudentId() {
         return studentId;
     }
 
-    public void setStudentId(String studentId) {
+    public Enrollment setStudentId(String studentId) {
         this.studentId = studentId;
+        return this;
     }
 
     public String getAccountId() {
         return accountId;
     }
 
-    public void setAccountId(String accountId) {
+    public Enrollment setAccountId(String accountId) {
         this.accountId = accountId;
+        return this;
     }
 }

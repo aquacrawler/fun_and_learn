@@ -31,6 +31,8 @@ public class Account extends CouchDbDocument {
     private BigDecimal currentBalance;
     @JsonProperty
     private List<AccountEntry> entries;
+    @JsonProperty
+    private boolean latest;
     
     public Account() {
         super();
@@ -47,16 +49,18 @@ public class Account extends CouchDbDocument {
         return schoolPeriodId;
     }
 
-    public void setSchoolPeriodId(String schoolPeriodId) {
+    public Account setSchoolPeriodId(String schoolPeriodId) {
         this.schoolPeriodId = schoolPeriodId;
+        return this;
     }
 
     public String getStudentId() {
         return studentId;
     }
 
-    public void setStudentId(String studentId) {
+    public Account setStudentId(String studentId) {
         this.studentId = studentId;
+        return this;
     }
 
     public BigDecimal getCurrentBalance() {
@@ -67,9 +71,10 @@ public class Account extends CouchDbDocument {
         return entries;
     }
     
-    public void setEntries(List<AccountEntry> entries) {
+    public Account setEntries(List<AccountEntry> entries) {
         this.entries = entries;
         recomputeBalance();
+        return this;
     }
     
     private void recomputeBalance() {
@@ -85,5 +90,14 @@ public class Account extends CouchDbDocument {
         }
         
         this.currentBalance = balance;
+    }
+
+    public boolean isLatest() {
+        return latest;
+    }
+
+    public Account setLatest(boolean current) {
+        this.latest = current;
+        return this;
     }
 }

@@ -23,7 +23,7 @@ public class CoursePrice extends CouchDbDocument{
     @JsonProperty
     private StudentLevel level;
     @JsonProperty
-    private BigDecimal price;
+    private BigDecimal price;       // initially the monthly price
     @JsonProperty
     private Map<String, BigDecimal> otherFees = new HashMap<>();
     
@@ -44,31 +44,35 @@ public class CoursePrice extends CouchDbDocument{
         return schoolPeriodId;
     }
 
-    public void setSchoolPeriodId(String schoolPeriodId) {
+    public CoursePrice setSchoolPeriodId(String schoolPeriodId) {
         this.schoolPeriodId = schoolPeriodId;
+        return this;
     }
 
     public StudentLevel getLevel() {
         return level;
     }
 
-    public void setLevel(StudentLevel level) {
+    public CoursePrice setLevel(StudentLevel level) {
         this.level = level;
+        return this;
     }
 
     public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    public CoursePrice setPrice(BigDecimal price) {
         this.price = price;
+        return this;
     }
 
     public Map<String, BigDecimal> getOtherFees() {
         return otherFees;
     }
     
-    public void addOtherFee(String name, BigDecimal amount) {
+    public CoursePrice addOtherFee(String name, BigDecimal amount) {
         otherFees.put(name, amount);
+        return this;
     }
 }
