@@ -58,7 +58,10 @@ public class School {
     }
     
     public void updateSchoolPeriod(SchoolPeriod sp) {
-        schoolPeriodRepo.update(sp);
+        SchoolPeriod savedSP = schoolPeriodRepo.get(sp.getId());
+        savedSP.setName(sp.getName());
+        
+        schoolPeriodRepo.update(savedSP);
     }
     
     public Account addAccountForSchoolPeriod(String studentId, String schoolPeriodId) {
