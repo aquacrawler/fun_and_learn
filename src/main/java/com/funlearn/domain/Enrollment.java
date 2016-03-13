@@ -23,6 +23,8 @@ public class Enrollment extends CouchDbDocument {
     private String studentId;
     @JsonProperty
     private String accountId;
+    @JsonProperty
+    private PaymentMode paymentMode;
     
     public Enrollment() {
         super();
@@ -63,5 +65,13 @@ public class Enrollment extends CouchDbDocument {
     public Enrollment setAccountId(String accountId) {
         this.accountId = accountId;
         return this;
+    }
+
+    public PaymentMode getPaymentMode() {
+        return paymentMode;
+    }
+
+    public void setPaymentMode(PaymentMode paymentMode) {
+        this.paymentMode = paymentMode;
     }
 }

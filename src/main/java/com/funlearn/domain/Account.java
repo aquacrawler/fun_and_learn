@@ -1,6 +1,7 @@
 package com.funlearn.domain;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
@@ -30,7 +31,7 @@ public class Account extends CouchDbDocument {
     @JsonProperty
     private BigDecimal currentBalance;
     @JsonProperty
-    private List<AccountEntry> entries;
+    private List<AccountEntry> entries = new ArrayList<>();
     @JsonProperty
     private boolean latest;
     

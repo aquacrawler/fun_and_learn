@@ -13,6 +13,7 @@ import com.funlearn.repo.SchoolPeriodRepo;
 import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Map;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -70,12 +71,14 @@ public class School {
         
         if (account == null) {
             // no latest account so we create one
+            LOG.log(Level.INFO, "No account for student {0}. Creating new one.", studentId);
             Account newAccount = new Account().setLatest(true)
                     .setStudentId(studentId)
                     .setSchoolPeriodId(schoolPeriodId);
             accountRepo.add(newAccount);
             return newAccount;
         } else {
+            LOG.log(Level.INFO, "Retrieved Account:{0}", account.getId());
             if (account.getSchoolPeriodId().equals(schoolPeriodId)) {
                 return account;
             }

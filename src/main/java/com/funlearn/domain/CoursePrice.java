@@ -13,7 +13,8 @@ import org.ektorp.support.TypeDiscriminator;
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @TypeDiscriminator("doc.type == 'CoursePrice'")
-public class CoursePrice extends CouchDbDocument{
+public class CoursePrice extends CouchDbDocument {
+
     private static String DOC_TYPE = "CoursePrice";
 
     @JsonProperty
@@ -23,10 +24,13 @@ public class CoursePrice extends CouchDbDocument{
     @JsonProperty
     private StudentLevel level;
     @JsonProperty
-    private BigDecimal price;       // initially the monthly price
+    private BigDecimal monthlyPrice;       // initially the monthly price
+    @JsonProperty
+    private int numberOfMonths = 10;       // number of months to pay 
+
     @JsonProperty
     private Map<String, BigDecimal> otherFees = new HashMap<>();
-    
+
     public CoursePrice() {
         super();
         this.type = DOC_TYPE;
@@ -58,21 +62,29 @@ public class CoursePrice extends CouchDbDocument{
         return this;
     }
 
-    public BigDecimal getPrice() {
-        return price;
+    public BigDecimal getMonthlyPrice() {
+        return monthlyPrice;
     }
 
     public CoursePrice setPrice(BigDecimal price) {
-        this.price = price;
+        this.monthlyPrice = price;
         return this;
     }
 
     public Map<String, BigDecimal> getOtherFees() {
         return otherFees;
     }
-    
+
     public CoursePrice addOtherFee(String name, BigDecimal amount) {
         otherFees.put(name, amount);
         return this;
+    }
+
+    public int getNumberOfMonths() {
+        return numberOfMonths;
+    }
+
+    public void setNumberOfMonths(int numberOfMonths) {
+        this.numberOfMonths = numberOfMonths;
     }
 }

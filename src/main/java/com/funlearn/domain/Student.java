@@ -37,6 +37,8 @@ public class Student extends CouchDbDocument {
     private String mothersContactNo;
     @JsonProperty
     private StudentLevel level;
+    @JsonProperty
+    private boolean active;
     
     public Student() {
         super();
@@ -121,5 +123,13 @@ public class Student extends CouchDbDocument {
 
     public void setLevel(StudentLevel level) {
         this.level = level;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }
