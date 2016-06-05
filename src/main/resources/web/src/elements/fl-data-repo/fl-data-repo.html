@@ -1,0 +1,96 @@
+<!--
+fl-data-repo - Object repositories component
+
+-->
+<dom-module id="fl-data-repo">
+<link rel="import" href="/bower_components/iron-ajax/iron-ajax.html" >
+<template>
+    <iron-ajax
+            id="ajaxObj"
+            handle-as="json"
+            verbose="true"
+            headers='{"Content-Type":"application/json","Accept":"application/json"}'
+            last-response="{{lastResponse}}"
+            
+        >
+    </iron-ajax>
+</template>
+<script>
+    Polymer({
+        is : 'fl-data-repo',
+        
+        ready : function () {
+            this.$.ajaxObj.url = this.urls[this.objectType];
+            console.log('data-repo url:' + this.urls[this.objectType] );
+        },
+        
+        listeners : {
+        },
+        
+        properties : {
+            /* the UI domain object type to be retrieved*/
+            objectType : {
+                type : String,
+                value : 'Student'
+            },
+            
+            /* request method: get / put / delete  */
+            method : {
+                type : String,
+                value : 'get'
+            },
+            
+            /* the sorting by field. the first index takes precedence over the next one*/
+            orderBy : {
+                type : Array,
+                value : ['id']
+            },
+            
+            /* selection criteria used when retrieving Student objects*/
+            filterBy : {
+                type : Object,
+                value : {}
+            },
+            
+            /* latest response from server */
+            lastResponse: {
+                type: Object,
+                notify: true,
+            },
+        },
+        
+        _resetParams : function() {
+            console.log("Params reset");
+            this.objectType = 'Student';
+            this.$.ajaxObj.url = this.urls[this.objectType];
+            this.method = 'get';
+            this.orderBy = ['id'];
+            this.filterBy = {};
+        },
+
+        generateRequest : function() {
+                var ajaxObj = this.$.ajaxObj;
+                ajaxObj.url = this.urls[this.objectType];
+
+                if (this.method) {
+                    ajaxObj.method = this.method;
+                }
+
+                if (this.filterBy['id']) {
+                    ajaxObj.url += "/" + this.filterBy['id'];
+                }
+
+                ajaxObj.generateRequest();
+
+                // after every request we need to first the properties to go back to defaults
+                this._resetParams();
+            },
+
+        urls : {
+                    Student : '/students'
+                }
+        }
+    );
+    
+</script>
+</dom-module>

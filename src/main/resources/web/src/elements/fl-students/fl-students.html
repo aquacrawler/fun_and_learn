@@ -1,0 +1,164 @@
+<dom-module id="fl-students">
+    <style>
+        :host {
+            display: block
+        }
+    </style>
+    <template>
+        <table>
+            <thead>
+              <tr>
+                <template is="dom-repeat" items="{{columns}}" as="column">
+                  <th>
+                    <button type="button" on-click="changeSort">{{_getHeaderTitle(column)}}</button>
+                  </th>
+                </template>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <template is="dom-repeat" items="[[data]]" as="row" sort="{{_sortByKey(sortColumn, sortDescending)}}">
+                <tr>
+                  <template is="dom-repeat" items="{{columns}}" as="column">
+                    <td>{{_getTableData(row, column)}}</td>
+                  </template>
+                    <td>
+                        <paper-icon-button icon="delete" on-tap="onDelete"></paper-icon-button>
+                    </td>
+                </tr>
+              </template>
+            </tbody>
+      </table>
+        <fl-data-repo id="dataRepo"
+                      last-response="{{data}}">
+ 
+        </fl-data-repo>  
+    </template>
+    <script>
+        Polymer({
+           is : 'fl-students',
+           
+           ready : function() {
+           },
+           
+           properties : {
+                /**
+                * Column to order */
+                sortColumn: {
+                  type: String
+                },
+
+                /**
+                 * Ascending or descending order */
+                sortDescending: {
+                  type: String,
+                  value: 'false'
+                },
+                
+                columns : {
+                    type    : Array,
+                    notify  : true,
+                    value   : [{ name : 'lastname', title: 'Lastname' },
+                                { name : 'firstname', title: 'Firstname'},
+                                { name : 'middlename', title: 'Middlename'},
+                                { name : 'birthdate', title: 'Birthdate'},
+                                { name : 'address', title: 'Address'},
+                                { name : 'fathersname', title: 'Fathers Name'},
+                                { name : 'fathersContactNo', title: 'Contact No.'},
+                                { name : 'mothersname', title: 'Mothers Name'},
+                                { name : 'mothersContactNo', title: 'Contact No.'}
+                              ]
+                },
+                
+                data : {
+                    type    : Object,
+                    notify  : true,
+                }
+           },
+           
+           getData : function () {
+               this.$.dataRepo.generateRequest();
+           },
+           
+           /**
+            * Get the data to fill a td element
+            *
+            * @param {string} row The data row
+            * @param {string} column The data column */
+           _getTableData: function(row, column) {
+             return row[column.name];
+           },
+
+           /**
+            * Get the custom title of the table, if exists
+            *
+            * @param {string} column The data column */
+           _getHeaderTitle: function(column) {
+             return !(column.title) ? column.name : column.title;
+           },
+
+           /**
+            * Sort a column. It is use by the dom-repeat sort attribute
+            *
+            * @param {string} key The key of the data to be sorted
+            * @param {string} desc The type of order: ascending or descending */
+           _sortByKey: function(key, desc) {
+             return function(a, b) {
+               var x = a[key];
+               var y = b[key];
+               
+               if (x == null) {
+                   x = "";
+               }
+               
+               if (y == null) {
+                   y = "";
+               }
+               
+               if (typeof x === 'string') {
+                 x = x.toLowerCase();
+                 y = y.toLowerCase();
+               }
+
+               if (desc === 'false') {
+                 return ((x < y) ? 1 : ((x > y) ? -1 : 0));
+               } else {
+                 return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+               }
+             };
+           },
+
+           /**
+            * Perform an ordenation over a column
+            *
+            * @param {Object} event The information when the user click in a header */
+           changeSort: function(event) {
+             var clickedSortColumn = event.model.column.name;
+             if (clickedSortColumn === this.sortColumn) {
+               this.sortDescending = (this.sortDescending === 'true') ? 'false' : 'true';
+             } else {
+               this.sortColumn = clickedSortColumn;
+             }
+           },
+
+           /**
+            * Delete student
+            * @param {type} event
+            * @returns {undefined}
+            */
+           onDelete: function(event) {
+               var student = event.model.row
+               if (window.confirm("Are you sure you want to delete the student " + student.firstname + " " + student.lastname + "?")) {
+                   console.log("Deleting student " + event.model.row.id);
+                   var dataRepo = this.$.dataRepo;
+                   dataRepo.method = "delete";
+                   dataRepo.filterBy = { id : event.model.row.id};
+                   dataRepo.generateRequest();
+                   alert("Student deleted");
+                   // reload
+                   dataRepo.generateRequest();
+               }
+           }
+       });
+    </script>
+</dom-module>
